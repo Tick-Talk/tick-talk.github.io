@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sign In - Tick Talk</title>
+    <title>Create Account - Tick Talk</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -25,26 +25,54 @@
           console.log('Name: ' + profile.getName());
           console.log('Image URL: ' + profile.getImageUrl());
           console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+        
+            //CHECK IF USER ALREADY IN DB
+            
+            //WRITE NEW USER TO DB
+            firebase.database().ref('users').child().set({
+                username: profile.getName(),
+                email: profile.getEmail(),
+                profile_picture: profile.getImageUrl()
+            });
+            
+            
         }
         
-          function signOut() {
-            var auth2 = gapi.auth2.getAuthInstance();
-            auth2.signOut().then(function () {
-              console.log('User signed out.');
-            });
-          }
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log('User signed out.');
+        });
+      }
     </script>
 </head>
 
 <body>
 
     <div class="container-fluid">
-        <h1>Welcome to Tick Talk - Google Sign-In</h1>
+        <h1>Welcome to Tick Talk - Create Account</h1>
         <div class="g-signin2" data-onsuccess="onSignIn"></div>
-        <a href="#" onclick="signOut();">Sign out</a>
     </div>
     
     
+    <!-- FIREBASE CODE -->
+    
+    <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBgJzwANAsBxreCUEj14CLZ_05f4zp3pKM",
+        authDomain: "tick-talk2-1531444556975.firebaseapp.com",
+        databaseURL: "https://tick-talk2-1531444556975.firebaseio.com",
+        projectId: "tick-talk2-1531444556975",
+        storageBucket: "tick-talk2-1531444556975.appspot.com",
+        messagingSenderId: "154862558731"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script>
+        
+    </script>
 </body>
 
 </html>
