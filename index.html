@@ -29,7 +29,7 @@
             //CHECK IF USER ALREADY IN DB
             
             //WRITE NEW USER TO DB
-            firebase.database().ref('users').child().set({
+            firebase.database().ref('users').child(profile.getName()).set({
                 username: profile.getName(),
                 email: profile.getEmail(),
                 profile_picture: profile.getImageUrl()
