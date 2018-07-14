@@ -19,6 +19,9 @@
     <meta name="google-signin-client_id" content="154862558731-9iejifeuec95ronghsg5t71u50203n19.apps.googleusercontent.com">
     
     <script>
+        
+        
+        
         function onSignIn(googleUser) {
           var profile = googleUser.getBasicProfile();
           console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
@@ -44,6 +47,30 @@
           console.log('User signed out.');
         });
       }
+        
+        //firebase anonymous authentication
+        firebase.auth().signInAnonymously().catch(function(error) {
+            //handle errors here
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            
+            console.log("signinanonymously - ERROR!\n\tCode: " + errorCode + "\n\tMessage: " + error.message);
+        });
+        
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                //User is signed in
+                alert("User is signed in! ");
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var userRef = app.datainfo.child(app.users);
+                
+            } else {
+                //user is signed out
+                alert("User signed out.. :(");
+            }
+        });
+        
     </script>
 </head>
 
