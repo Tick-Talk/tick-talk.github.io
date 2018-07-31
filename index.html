@@ -27,8 +27,22 @@
           console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
         
             //CHECK IF USER ALREADY IN DB
+            var userId = firebase.auth().currentUser.uid;
+            var usernameinputted = "";
+            var r = firebase.database().ref('/users/' + usernameinputted);
+            r.on("value", function(snapshot) {    
+                //TODO MAKE SURE that the "on value" event is triggered at the time of this listener being set, and not only when a value changes 
+                if (snapshot.exists()) {
+                    alert("username is already in the database");
+                } else {
+                    alert("Username is not yet in database. Let's create an account!");
+                }
+            }, function(e) {
+                alert("Unfortunately the client does not have permission to read data :(\nError: " + e);
+            });
             
-            //WRITE NEW USER TO DB
+            
+            //IF NOT, WRITE NEW USER TO DB
             firebase.database().ref('users').child(profile.getName()).set({
                 username: profile.getName(),
                 email: profile.getEmail(),
@@ -43,6 +57,19 @@
         auth2.signOut().then(function () {
           console.log('User signed out.');
         });
+      }
+        
+      function checkUserInDB() {
+          var uIN = prompt("What username do you wanna search for?");
+          firebase.database().ref('/users/' + uIN).on("value", function(){
+              if (snapshot.exists()) {
+                  alert("user " + uIN + " IS in database");
+              } else {
+                  alert("user " + uIN + "IS NOT in database");
+              }
+          }, function(e) {
+              alert("Unfortunately the client does not have permission to read data :(\nError: " + e);
+          });
       }
     </script>
 </head>
@@ -61,7 +88,7 @@
     <script>
       // Initialize Firebase
       var config = {
-        apiKey: "AIzaSyBgJzwANAsBxreCUEj14CLZ_05f4zp3pKM",
+        apiKey: "AIzaSyBgJzwANAsBxreCUEj14CLZ_05f4zp3pKM", //don't look at this
         authDomain: "tick-talk2-1531444556975.firebaseapp.com",
         databaseURL: "https://tick-talk2-1531444556975.firebaseio.com",
         projectId: "tick-talk2-1531444556975",
