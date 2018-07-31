@@ -61,7 +61,7 @@
         
       function checkUserInDB() {
           var uIN = prompt("What username do you wanna search for?");
-          firebase.database().ref('/users/' + uIN).on("value", function(){
+          firebase.database().ref('/users/' + uIN).on("value", function(snapshot){
               if (snapshot.exists()) {
                   alert("user " + uIN + " IS in database");
               } else {
