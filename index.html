@@ -59,13 +59,14 @@
         });
       }
         
-      function checkUserInDB() {
-          var uIN = prompt("What username do you wanna search for?");
-          firebase.database().ref('/users/' + uIN).on("value", function(snapshot){
+      function userIsInDB(userToSearch) {
+          firebase.database().ref('/users/' + userToSearch).on("value", function(snapshot){
               if (snapshot.exists()) {
-                  alert("user " + uIN + " IS in database");
+                  console.log("user " + userToSearch + " IS in database");
+                  return true;
               } else {
-                  alert("user " + uIN + "IS NOT in database");
+                  console.log("user " + userToSearch + " IS NOT in database");
+                  false;
               }
           }, function(e) {
               alert("Unfortunately the client does not have permission to read data :(\nError: " + e);
